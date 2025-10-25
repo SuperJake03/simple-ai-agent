@@ -15,12 +15,16 @@ def main():
         sys.exit(1)
     prompt = " ".join(args)
 
+    messages = [
+        genai.types.Content(role="user", parts=[genai.types.Part(text=prompt)]),
+    ]
+
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
 
     response = client.models.generate_content(
         model="gemini-2.0-flash-001",
-        contents=prompt,
+        contents=messages,
     )
 
     print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")

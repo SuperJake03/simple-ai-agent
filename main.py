@@ -11,12 +11,12 @@ def main():
 
     if not args:
         print("No prompt provided\n")
-        print('Usage: python main.py "your prompt here"')
+        print('Usage: python main.py "your prompt here" [--verbose]')
         sys.exit(1)
-    prompt = " ".join(args)
+    user_prompt = args[0]
 
     messages = [
-        genai.types.Content(role="user", parts=[genai.types.Part(text=prompt)]),
+        genai.types.Content(role="user", parts=[genai.types.Part(text=user_prompt)]),
     ]
 
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -27,8 +27,11 @@ def main():
         contents=messages,
     )
 
-    print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-    print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+    if "--verbose" in args:
+        print(f"User prompt: {user_prompt}")
+        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+        print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+
     print(response.text)
 
 

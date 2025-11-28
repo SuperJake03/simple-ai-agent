@@ -14,5 +14,7 @@ def get_file_content(working_directory, file_path):
         if not os.path.isfile(tgt_path):
             return f'Error: File not found or is not a regular file: "{file_path}"'
 
+        # Finish function here
+
     except Exception as e:
         return f"Error: {e}"

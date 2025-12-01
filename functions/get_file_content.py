@@ -15,7 +15,6 @@ def get_file_content(working_directory, file_path):
             return f'Error: File not found or is not a regular file: "{file_path}"'
 
         # Finish function here
-        # cont sreak
 
     except Exception as e:
         return f"Error: {e}"

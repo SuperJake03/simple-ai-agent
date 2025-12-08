@@ -1,5 +1,6 @@
 import os
 import sys
+
 from dotenv import load_dotenv
 from google import genai
 
@@ -23,9 +24,12 @@ def main():
     client = genai.Client(api_key=api_key)
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash-001",
+        model="gemini-2.5-flash",
         contents=messages,
     )
+
+    if response.usage_metadata is None:
+        raise RuntimeError("Error when getting a response")
 
     if "--verbose" in args:
         print(f"User prompt: {user_prompt}")

@@ -18,6 +18,6 @@ def run_python_file(working_directory, file_path, args=[]):
         if not file_path.endswith(".py"):
             return f'Error: "{file_path}" is not a Python file.'
 
-        # continue
+        # continue for lesson
     except Exception as e:
         return f"Error: {e}"

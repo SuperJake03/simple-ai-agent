@@ -1,6 +1,7 @@
 from functions.run_python_file import run_python_file
 
 
+# For streak
 def run_test():
     test_1 = run_python_file("calculator", "main.py")
     print("Result for test 1")

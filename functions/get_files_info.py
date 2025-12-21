@@ -1,5 +1,9 @@
 import os
 
+"""
+    Work here for lesson
+"""
+
 
 def get_files_info(working_directory, directory="."):
     try:

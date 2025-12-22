@@ -37,10 +37,11 @@ schema_get_file_content = types.FunctionDeclaration(
     description=f"Prints out a files contents. Max characters printed is {MAX_CHARS}",
     parameters=types.Schema(
         type=types.Type.OBJECT,
+        required=["file_path"],
         properties={
-            "directory": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="Directory path to list files from, relative to the working directory (default is the working directory itself)",
+                description="Path to the file to read, relative to the working directory",
             ),
         },
     ),

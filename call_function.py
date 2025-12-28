@@ -16,5 +16,5 @@ available_functions = types.Tool(
 
 
 """
-    Finish up lesson here
+    Finish up lesson here for boot.dev
 """

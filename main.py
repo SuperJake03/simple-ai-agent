@@ -8,7 +8,7 @@ from call_function import available_functions, call_function
 from prompts import system_prompt
 
 """
-Next Lesson is here, continue streak
+Next Lesson here
 """
 
 

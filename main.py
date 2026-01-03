@@ -7,10 +7,6 @@ from google import genai
 from call_function import available_functions, call_function
 from prompts import system_prompt
 
-"""
-Lesson here
-"""
-
 
 def main():
     load_dotenv()
@@ -29,7 +25,11 @@ def main():
 
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
+    for _ in range(20):
+        generate_content(client, messages, args)
 
+
+def generate_content(client, messages, args):
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=messages,

@@ -8,7 +8,7 @@ from call_function import available_functions, call_function
 from prompts import system_prompt
 
 """
-Work here for lesson
+Lesson here
 """
 
 

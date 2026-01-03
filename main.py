@@ -38,6 +38,10 @@ def generate_content(client, messages, args):
         ),
     )
 
+    if response.candidates:
+        for candidate in response.candidates:
+            messages.append(candidate.content)
+
     if response.usage_metadata is None:
         raise RuntimeError("Error when getting a response")
 

@@ -7,6 +7,10 @@ from google import genai
 from call_function import available_functions, call_function
 from prompts import system_prompt
 
+"""
+    Contiune lesson
+"""
+
 
 def main():
     load_dotenv()

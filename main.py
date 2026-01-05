@@ -3,13 +3,10 @@ import sys
 
 from dotenv import load_dotenv
 from google import genai
+from typing_extensions import final
 
 from call_function import available_functions, call_function
 from prompts import system_prompt
-
-"""
-    Contiune lesson
-"""
 
 
 def main():
@@ -29,11 +26,16 @@ def main():
 
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
+    final_response = False
     for _ in range(20):
-        generate_content(client, messages, args)
+        final_response = generate_content(client, user_prompt, messages, args)
+        if final_response:
+            break
+    if not final_response:
+        sys.exit("No final response was produced!")
 
 
-def generate_content(client, messages, args):
+def generate_content(client, user_prompt, messages, args):
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=messages,
@@ -59,20 +61,24 @@ def generate_content(client, messages, args):
     function_results = []
 
     if response.function_calls is None:
+        print("Final Response:")
         print(response.text)
-    else:
-        for function_call in response.function_calls:
-            # print(f"Calling function: {function_call.name}({function_call.args})")
-            function_call_result = call_function(function_call, verbose)
-            if not function_call_result.parts:
-                raise Exception("Function call result is empty")
-            if function_call_result.parts[0].function_response is None:
-                raise Exception("Function response is None")
-            if function_call_result.parts[0].function_response.response is None:
-                raise Exception("Response is None")
-            function_results.append(function_call_result.parts[0])
-            if verbose:
-                print(f"-> {function_call_result.parts[0].function_response.response}")
+        return True
+
+    for function_call in response.function_calls:
+        function_call_result = call_function(function_call, verbose)
+        if not function_call_result.parts:
+            raise Exception("Function call result is empty")
+        if function_call_result.parts[0].function_response is None:
+            raise Exception("Function response is None")
+        if function_call_result.parts[0].function_response.response is None:
+            raise Exception("Response is None")
+        function_results.append(function_call_result.parts[0])
+        if verbose:
+            print(f"-> {function_call_result.parts[0].function_response.response}")
+
+    messages.append(genai.types.Content(role="user", parts=function_results))
+    return False
 
 
 if __name__ == "__main__":
